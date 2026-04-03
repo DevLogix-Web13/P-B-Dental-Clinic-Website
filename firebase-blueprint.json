@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "Appointment": {
+      "title": "Appointment",
+      "description": "A dental appointment booking.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Patient's full name" },
+        "email": { "type": "string", "format": "email", "description": "Patient's email address" },
+        "phone": { "type": "string", "description": "Patient's phone number" },
+        "service": { "type": "string", "description": "Type of dental service" },
+        "date": { "type": "string", "format": "date", "description": "Appointment date" },
+        "slot": { "type": "string", "description": "Selected time slot" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"], "description": "Status of the appointment" },
+        "reminderSent": { "type": "boolean", "description": "Whether an automated reminder has been sent" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the appointment was created" }
+      },
+      "required": ["name", "email", "phone", "service", "date", "slot"]
+    }
+  },
+  "firestore": {
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of all dental appointments."
+    }
+  }
+}

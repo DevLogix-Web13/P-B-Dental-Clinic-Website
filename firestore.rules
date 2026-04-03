@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /appointments/{appointmentId} {
+      allow create: if true; // Anyone can book
+      
+      // Patients can read their own, Admin can read ALL
+      allow read: if request.auth != null && (
+                      request.auth.token.email == resource.data.email ||
+                      request.auth.token.email == "romelmontiagodo68@gmail.com"
+                    );
+      
+      // Only Admin can update status or delete
+      allow update, delete: if request.auth != null && 
+                                   request.auth.token.email == "romelmontiagodo68@gmail.com";
+    }
+  }
+}
